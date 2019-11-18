@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const schemaName = new Schema({
   name: String,
-  ingredients: [{ type: Schema.Types.ObjectId, ref: "ingredients" }]
+  location: String,
+  city: String,
+  pizzas: [{ type: Schema.Types.ObjectId, ref: "Pizzas" }]
 });
 
-const Model = mongoose.model("Pizza", schemaName);
+const Model = mongoose.model("Stores", schemaName);
 module.exports = Model;
