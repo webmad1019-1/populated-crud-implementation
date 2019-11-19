@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const schemaName = new Schema({
   name: String,
+  basePrice: Number,
+  baseCalories: Number,
   ingredients: [{ type: Schema.Types.ObjectId, ref: "Ingredients" }]
 });
 

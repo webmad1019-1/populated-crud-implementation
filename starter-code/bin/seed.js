@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 let Ingredients = require("../models/Ingredients");
 let Orders = require("../models/Orders");
 let Pizzas = require("../models/Pizzas");
-let Stores = require("../models/Stores");
 let Customers = require("../models/Customers");
 
 mongoose
@@ -33,9 +32,6 @@ function clearDB() {
           return Pizzas.deleteMany();
         })
         .then(() => {
-          return Stores.deleteMany();
-        })
-        .then(() => {
           return Customers.deleteMany();
         })
     );
@@ -44,7 +40,6 @@ function clearDB() {
 
 function populateDB() {
   let pizzasAddedGlobal;
-  let storesAddedGlobal;
 
   //first populate ingredients
   Ingredients.create([
@@ -83,10 +78,14 @@ function populateDB() {
       return Pizzas.create(
         {
           name: "Piamontesa",
+          baseCalories: 1000,
+          basePrice: 3,
           ingredients: [ingredientsAdded[0]._id, ingredientsAdded[3]._id, ingredientsAdded[4]._id]
         },
         {
           name: "Tenessee",
+          baseCalories: 1400,
+          basePrice: 2.2,
           ingredients: [
             ingredientsAdded[0]._id,
             ingredientsAdded[1]._id,
@@ -96,6 +95,8 @@ function populateDB() {
         },
         {
           name: "Barbacoa Gourmet",
+          baseCalories: 800,
+          basePrice: 2.1,
           ingredients: [
             ingredientsAdded[2]._id,
             ingredientsAdded[3]._id,
@@ -105,6 +106,8 @@ function populateDB() {
         },
         {
           name: "Barbacoa Crispy",
+          baseCalories: 900,
+          basePrice: 2.4,
           ingredients: [
             ingredientsAdded[0]._id,
             ingredientsAdded[1]._id,
@@ -114,6 +117,8 @@ function populateDB() {
         },
         {
           name: "Ibérica",
+          baseCalories: 920,
+          basePrice: 3.4,
           ingredients: [
             ingredientsAdded[0]._id,
             ingredientsAdded[1]._id,
@@ -123,9 +128,13 @@ function populateDB() {
         },
         {
           name: "Hawaiana",
+          baseCalories: 1500,
+          basePrice: 4.2,
           ingredients: [ingredientsAdded[1]._id, ingredientsAdded[2]._id, ingredientsAdded[5]._id]
         },
         {
+          baseCalories: 1900,
+          basePrice: 1.2,
           name: "Carbonara",
           ingredients: [ingredientsAdded[0]._id, ingredientsAdded[1]._id, ingredientsAdded[4]._id]
         }
@@ -133,49 +142,6 @@ function populateDB() {
     })
     .then(pizzasAdded => {
       pizzasAddedGlobal = pizzasAdded;
-      return Stores.create([
-        {
-          name: "Telepizza",
-          location: "Puerta del Sol",
-          city: "Madrid",
-          pizzas: [pizzasAdded[0]._id, pizzasAdded[1]._id, pizzasAdded[2]._id, pizzasAdded[3]._id]
-        },
-        {
-          name: "Telepizza",
-          location: "La Latina",
-          city: "Madrid",
-          pizzas: [pizzasAdded[0]._id, pizzasAdded[4]._id, pizzasAdded[5]._id, pizzasAdded[6]._id]
-        },
-        {
-          name: "Telepizza",
-          location: "Plaza Urquinaona",
-          city: "Barcelona",
-          pizzas: [pizzasAdded[0]._id, pizzasAdded[3]._id, pizzasAdded[4]._id, pizzasAdded[6]._id]
-        },
-        {
-          name: "Telepizza",
-          location: "Centro cultural Santa Mónica",
-          city: "Barcelona",
-          pizzas: [
-            pizzasAdded[0]._id,
-            pizzasAdded[1]._id,
-            pizzasAdded[2]._id,
-            pizzasAdded[3]._id,
-            pizzasAdded[5]._id,
-            pizzasAdded[6]._id
-          ]
-        },
-        {
-          name: "Telepizza",
-          location: "La muralla del casco viejo",
-          city: "Cádiz",
-          pizzas: [pizzasAdded[1]._id, pizzasAdded[2]._id, pizzasAdded[3]._id, pizzasAdded[6]._id]
-        }
-      ]);
-    })
-    .then(storesAdded => {
-      storesAddedGlobal = storesAdded;
-
       return Customers.create([
         {
           name: "Rafael Nieto de Dios"
@@ -201,52 +167,42 @@ function populateDB() {
       return Orders.create([
         {
           customer: customers[0]._id,
-          store: storesAddedGlobal[0]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[1]._id]
         },
         {
           customer: customers[1]._id,
-          store: storesAddedGlobal[1]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[1]._id]
         },
         {
           customer: customers[2]._id,
-          store: storesAddedGlobal[1]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[1]._id]
         },
         {
           customer: customers[3]._id,
-          store: storesAddedGlobal[2]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[1]._id]
         },
         {
           customer: customers[4]._id,
-          store: storesAddedGlobal[2]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[1]._id]
         },
         {
           customer: customers[4]._id,
-          store: storesAddedGlobal[3]._id,
           pizzas: [pizzasAddedGlobal[1]._id, pizzasAddedGlobal[4]._id]
         },
         {
           customer: customers[4]._id,
-          store: storesAddedGlobal[3]._id,
           pizzas: [pizzasAddedGlobal[0]._id, pizzasAddedGlobal[5]._id, pizzasAddedGlobal[6]._id]
         },
         {
           customer: customers[4]._id,
-          store: storesAddedGlobal[2]._id,
           pizzas: [pizzasAddedGlobal[2]._id, pizzasAddedGlobal[5]._id]
         },
         {
           customer: customers[5]._id,
-          store: storesAddedGlobal[2]._id,
           pizzas: [pizzasAddedGlobal[3]._id, pizzasAddedGlobal[6]._id]
         },
         {
           customer: customers[5]._id,
-          store: storesAddedGlobal[2]._id,
           pizzas: [
             pizzasAddedGlobal[3]._id,
             pizzasAddedGlobal[4]._id,
