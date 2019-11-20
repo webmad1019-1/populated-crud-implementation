@@ -5,6 +5,8 @@ const schemaName = new Schema({
   name: String,
   calories: Number,
   price: Number
+}, {
+  timestamps: true
 });
 
 const Model = mongoose.model("Ingredients", schemaName);
